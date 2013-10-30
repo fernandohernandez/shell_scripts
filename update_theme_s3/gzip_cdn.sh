@@ -12,6 +12,8 @@ updated=();
 path=".";
 NOW=$(date +"%Y-%m-%d %H:%M");
 
+source common.sh
+
 if [ -f .amz_key ]; then
    key=`cat .amz_key`;
 else
@@ -60,12 +62,18 @@ for extension in "${extensions[@]}"; do
   files=$(find ${path} -type f -iname "${extension}");
   for file in $files  
   do
-   #if file.gz not exists or file is newer than file.gz
-   if [ $file -nt "$file.gz" ]; then 
-    echo "   * Gzip $file";
-    gzip -c $file > "$file.gz"; 
-    (( updated[i]++ ));
-   fi
+   remote_item=${file#$remove_path};
+   
+   #If file not in excludes paths
+   if [ $(exclude $remote_item) -eq 0 ]
+    then
+       #if file.gz not exists or file is newer than file.gz
+       if [ $file -nt "$file.gz" ]; then 
+         echo "   * Gzip $file";
+         gzip -c $file > "$file.gz"; 
+         (( updated[i]++ ));
+       fi
+    fi
   done
   (( i++ ));
 done

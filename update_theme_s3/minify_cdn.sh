@@ -12,6 +12,8 @@ updated=();
 path=".";
 NOW=$(date +"%Y-%m-%d %H:%M");
 
+source common.sh
+
 if [ -f .amz_key ]; then
    key=`cat .amz_key`;
 else
@@ -60,11 +62,17 @@ for extension in "${extensions[@]}"; do
   files=$(find ${path} -type f -iname *."${extension}");
   for file in $files  
   do
-   #if file.min not exists or file is newer than file.min
-   if [ $file -nt "$file.min" ]; then 
-    echo "   * Minify $file";
-    java -jar yuicompressor.jar --type ${extension} -o "$file.min" $file;
-    (( updated[i]++ ));
+   remote_item=${file#$remove_path};
+   
+   #If file not in excludes paths
+   if [ $(exclude $remote_item) -eq 0 ]
+    then  
+      #if file.min not exists or file is newer than file.min
+      if [ $file -nt "$file.min" ]; then 
+       echo "   * Minify $file";
+       java -jar yuicompressor.jar --type ${extension} -o "$file.min" $file;
+       (( updated[i]++ ));
+      fi
    fi
   done
   (( i++ ));

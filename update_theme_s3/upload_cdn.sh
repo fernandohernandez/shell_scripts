@@ -22,6 +22,8 @@ upload=();
 path=".";
 NOW=$(date +"%Y-%m-%d %H:%M");
 
+source common.sh
+
 if [ -f .amz_key ]; then
    key=`cat .amz_key`;
 else
@@ -73,26 +75,29 @@ for extension in "${extensions[@]}"; do
   do
     remote_item=${file#$remove_path};
 
-    status=`php s3info.php --accesskey=$key --secretkey=$secret --bucket=$bucket --file="$file" --remote=$base_path_s3$remote_item  2> /dev/null`;
+    #If file not in excludes paths
+    if [ $(exclude $remote_item) -eq 0 ]
+     then
+       status=`php s3info.php --accesskey=$key --secretkey=$secret --bucket=$bucket --file="$file" --remote=$base_path_s3$remote_item  2> /dev/null`;
     
-    case $status in
-     0) #file exits and equals hash, nothing to do   
-       echo -ne ".";
-       ;;
-     1) #new file
-       echo "  new file found: $file";
-       (( new[$i]++ ));      
-       upload+=("$file");
-       ;;
-     2) #updated        
-       echo "  file updated: $file";
-       (( updated[$i]++ ));
-       upload+=("$file");
-       ;;
-    esac
+       case $status in
+        0) #file exits and equals hash, nothing to do   
+          echo -ne ".";
+          ;;
+        1) #new file
+          echo "  new file found: $file";
+          (( new[$i]++ ));      
+          upload+=("$file");
+          ;;
+        2) #updated        
+          echo "  file updated: $file";
+          (( updated[$i]++ ));
+          upload+=("$file");
+          ;;
+        esac
         
-    (( found[$i]++ ));
-
+        (( found[$i]++ ));
+     fi
   done
   (( i++ ));
 done
