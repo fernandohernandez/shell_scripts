@@ -111,25 +111,31 @@ for extension in "${extensions[@]}"; do
   (( i++ ));
 done
 
-echo "";
-if [[ ${#upload[@]} -gt 0 ]]; then
+if [[ $4 == "--simulate" ]]
+then
+ echo "";
+ echo "Cancel upload files (only show changes).";
+else
+ echo "";
+ if [[ ${#upload[@]} -gt 0 ]]; then
   echo "-> Uploading files to Amazon S3: ";
   else
   echo " All files are up to date.";
-fi
+ fi
 
-count=1;
-for item in ${upload[@]}
-do
+ count=1;
+ for item in ${upload[@]}
+ do
   remote_item=${item#$remove_path};
   echo "  * Upload [$count/$sum]: $item -> S3:/$base_path_s3$remote_item ...";
   (( count++ ));
   php s3put.php --accesskey=$key --secretkey=$secret --bucket=$bucket --file="$item" --remote=$base_path_s3$remote_item 2> /dev/null;
-done
+ done
 
-if [[ ${#upload[@]} -gt 0 ]]; then
-  echo "";
-  echo "Upload complete.";
+ if [[ ${#upload[@]} -gt 0 ]]; then
+   echo "";
+   echo "Upload complete.";
+ fi
 fi
 
 exit 0;

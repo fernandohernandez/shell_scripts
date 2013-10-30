@@ -51,7 +51,7 @@ else
    chmod 600 .secret_key;
 fi
 
-while getopts "snh:l:e:b:" OPTION
+while getopts "csnh:l:e:b:" OPTION
 do
    case $OPTION in
          h )
@@ -129,7 +129,7 @@ fi
 if [ $UPLOAD -eq 0 ] 
 then
   echo "Only check changes (no upload files to s3)";
-  EXTRA_OPTIONS=$EXTRA_OPTIONS" --simulate";
+  EXTRA_OPTIONS="$EXTRA_OPTIONS --simulate";
 fi 
   ./upload_cdn.sh $LOCAL_PATH $EXCLUDE_PATH $EXTRA_OPTIONS;
 

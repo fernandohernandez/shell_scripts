@@ -28,6 +28,8 @@ $ ./update.sh [opciones] -l {ruta absoluta al directorio} -e {subruta local a su
 Opciones (flags)
  -s Solo procesar los scripts *.css y *.js (no las imágenes)
  -n No Upload (Simulación)
+ -c Eliminar las claves almacenadas
+ -h Muestra la ayuda
 
 Por ejemplo:
 ./update.sh -s -l /home/myuser/test/theme/ -e /home/myuser/test/ -b my_bucket
