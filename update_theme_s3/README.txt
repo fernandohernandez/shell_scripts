@@ -23,12 +23,17 @@ $ chmod +x *.sh
 Los headers utilizados en el upload a S3 se definen en headers.php
 
 EJECUCIÓN:
-$ ./update.sh {ruta absoluta al directorio} {subruta local a sustraer de la ruta de S3 (nuestro path local)} {bucket_name}
+$ ./update.sh [opciones] -l {ruta absoluta al directorio} -e {subruta local a sustraer de la ruta de S3 (nuestro path local)} [-b {bucket_name}]
+
+Opciones (flags)
+ -s Solo procesar los scripts *.css y *.js (no las imágenes)
+ -n No Upload (Simulación)
 
 Por ejemplo:
-./update.sh /home/myuser/test/theme/ /home/myuser/test/ my_bucket
+./update.sh -s -l /home/myuser/test/theme/ -e /home/myuser/test/ -b my_bucket
 
 Esto esta subiendo a S3://my_bucket/theme
+Solo los scripts *.css *.css.min.gz *.js *.js.mi.gz
 
 En la primer ejecución el script pedirá los keys de amazon y se almacenarán en .amz_key y .secret_key respectivamente, si los keys fueron erróneos o se quiere usar otras credenciales hay que eliminar dichos archivos.
 
