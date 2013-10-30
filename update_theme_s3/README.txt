@@ -22,6 +22,11 @@ $ chmod +x *.sh
 
 Los headers utilizados en el upload a S3 se definen en headers.php
 
+Pueden excluirse archivos o directorios agregandolos a exclude_files.txt, 
+la ruta utilizada debe ser relativa a la remota (S3) sin la / inicial, por ejem:
+wp-content/theme/mytheme/style.css* (excluira a style.css, style.css.min y style.css.min.gz)
+wp-content/theme/mytheme/js/* (exluira todo el contenido dentro de js)
+
 EJECUCIÓN:
 $ ./update.sh [opciones] -l {ruta absoluta al directorio} -e {subruta local a sustraer de la ruta de S3 (nuestro path local)} [-b {bucket_name}]
 
