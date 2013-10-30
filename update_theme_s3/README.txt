@@ -27,6 +27,9 @@ la ruta utilizada debe ser relativa a la remota (S3) sin la / inicial, por ejem:
 wp-content/theme/mytheme/style.css* (excluira a style.css, style.css.min y style.css.min.gz)
 wp-content/theme/mytheme/js/* (exluira todo el contenido dentro de js)
 
+Tambien puede utilizarse el comodín * para instanciar tipos de archivos:
+*.css.min.gz
+
 EJECUCIÓN:
 $ ./update.sh [opciones] -l {ruta absoluta al directorio} -e {subruta local a sustraer de la ruta de S3 (nuestro path local)} [-b {bucket_name}]
 
