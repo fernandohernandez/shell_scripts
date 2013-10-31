@@ -32,12 +32,12 @@ for extension in "${extensions[@]}"; do
     case ${extension} 
          in
            jpg) 
-               size_act=`du -h $file | awk '{print $1}'`;
+               size_act=`du $file | awk '{print $1}'`;
                size_act=${size_act#$file};
                jpegtran -optimize -copy none $file > "${file}_out";
                mv "${file}_out" $file;
-               new_size=`du -h $file | awk '{print $1}'`;
-               echo "    -$file size before optimize: $size_act | now: $new_size";
+               new_size=`du $file | awk '{print $1}'`;
+               echo "    -$file size before optimize: $size_act (bytes) | now: $new_size (bytes)";
                if [[ $size_act == $new_size ]]
                  then
                   (( unchanged[i]++ ));
@@ -50,7 +50,7 @@ for extension in "${extensions[@]}"; do
                size_act=${size_act#$file};
                optipng $file > /dev/null;
                new_size=`du -h $file | awk '{print $1}'`;
-               echo "    -$file size before optimize: $size_act | now: $new_size";
+               echo "    -$file size before optimize: $size_act (bytes) | now: $new_size (bytes)";
                if [[ $size_act == $new_size ]]
                  then
                   (( unchanged[i]++ ));
