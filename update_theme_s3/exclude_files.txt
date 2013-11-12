@@ -1,3 +1,5 @@
-wp-content/themes/GeoPlaces/admin/*
-wp-content/themes/GeoPlaces/library/css/*
-wp-content/themes/GeoPlaces/style_v2.css*
+#wp-content/themes/GeoPlaces/admin/*
+#wp-content/themes/GeoPlaces/library/css/*
+#wp-content/themes/GeoPlaces/style_v2.css*
+*.css
+*.js

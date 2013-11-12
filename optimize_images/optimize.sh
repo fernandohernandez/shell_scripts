@@ -48,7 +48,7 @@ for extension in "${extensions[@]}"; do
            png) 
                size_act=`du -h $file | awk '{print $1}'`;
                size_act=${size_act#$file};
-               optipng $file > /dev/null;
+               optipng -o7 $file > /dev/null;
                new_size=`du -h $file | awk '{print $1}'`;
                echo "    -$file size before optimize: $size_act (bytes) | now: $new_size (bytes)";
                if [[ $size_act == $new_size ]]
