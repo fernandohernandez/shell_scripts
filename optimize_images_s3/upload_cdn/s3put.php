@@ -13,6 +13,8 @@ if(!isset($metaHeaders)){
     $metaHeaders = $headers["default"];
 }
 
+$args["remote"] = str_replace("/", "//",$args["remote"]);
+
 if ($args["remote"][0] == '/') {
     $args["remote"] = substr($args["remote"], 1);
 }

@@ -2,7 +2,7 @@
 
 include(dirname(__FILE__)."/s3common.php");
 
-if(!$info=$s3->getObjectInfo($args["bucket"], $args["remote"])){
+if(!$info=$s3->getObjectInfo($args["bucket"], str_replace("/", "//",$args["remote"]))){
   //File not exists on S3
   echo "1"; 
 } else {
